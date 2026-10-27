@@ -1,0 +1,10 @@
+{
+  "name": "second-brain",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "packageManager": "pnpm@10.28.0",
+  "scripts": {
+    "sync:agents": "node scripts/sync-agents.mjs"
+  }
+}

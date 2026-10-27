@@ -1,0 +1,3 @@
+Cada funcionalidad tiene su carpeta: specs/001-base/, specs/002-release-mac/, ...
+Dentro: spec.md (qué y por qué), plan.md (cómo), tasks.md (lista de tareas con [ ] / [x]).
+Las specs no se borran: son la memoria a largo plazo del proyecto.
