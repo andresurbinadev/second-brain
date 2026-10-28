@@ -5,6 +5,7 @@
   "type": "module",
   "packageManager": "pnpm@10.28.0",
   "scripts": {
-    "sync:agents": "node scripts/sync-agents.mjs"
+    "sync:agents": "node scripts/sync-agents.mjs",
+    "postinstall": "node node_modules/electron/install.js"
   }
 }
