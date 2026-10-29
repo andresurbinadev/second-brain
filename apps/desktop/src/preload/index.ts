@@ -1,2 +1,9 @@
-// El puente entre la interfaz y el sistema. Mañana lo llenamos.
-export {};
+import { contextBridge, ipcRenderer } from 'electron';
+import { IPC, type PlatformApi } from '@sb/shared';
+
+const api: PlatformApi = {
+  getAppInfo: () => ipcRenderer.invoke(IPC.getAppInfo),
+  echo: (text) => ipcRenderer.invoke(IPC.echo, text),
+};
+
+contextBridge.exposeInMainWorld('api', api);
