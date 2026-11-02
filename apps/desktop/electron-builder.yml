@@ -1,0 +1,24 @@
+appId: org.surfyourlife.secondbrain
+productName: Second Brain
+directories:
+  output: release
+files:
+  - out/**
+  - package.json
+npmRebuild: false
+asarUnpack:
+  - '**/*.node'
+mac:
+  target:
+    - target: dmg
+      arch: universal
+    - target: zip
+      arch: universal
+  category: public.app-category.productivity
+  identity: null
+  x64ArchFiles: '**/better-sqlite3-multiple-ciphers/prebuilds/darwin-*.node'
+publish:
+  provider: github
+  owner: andresurbinadev
+  repo: second-brain
+  

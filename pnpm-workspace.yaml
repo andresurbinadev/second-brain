@@ -3,3 +3,4 @@ packages:
   - packages/*
 ignoredBuiltDependencies:
   - better-sqlite3-multiple-ciphers
+  - electron-winstaller
