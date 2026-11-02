@@ -7,7 +7,9 @@
     "noEmit": true,
     "skipLibCheck": true,
     "types": ["node"],
-    "lib": ["ES2022", "DOM"]
+    "lib": ["ES2022", "DOM"],
+    "esModuleInterop": true,
+
   },
   "include": ["src", "electron.vite.config.ts"]
 }

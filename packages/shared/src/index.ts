@@ -1,10 +1,9 @@
 import { z } from 'zod';
 
-// Lo que la interfaz puede pedirle al sistema. Es el contrato entre ambos:
-// la interfaz solo conoce estas funciones, nunca Electron ni Node.
 export interface PlatformApi {
   getAppInfo(): Promise<AppInfo>;
   echo(text: string): Promise<string>;
+  getVaultStatus(): Promise<VaultStatus>;
 }
 
 export const AppInfoSchema = z.object({
@@ -14,11 +13,13 @@ export const AppInfoSchema = z.object({
 });
 export type AppInfo = z.infer<typeof AppInfoSchema>;
 
-// Validación de lo que llega desde la interfaz: nunca se confía en ella.
+// Lo único que la interfaz ve de la bóveda: números, nunca la clave ni la ruta.
+export type VaultStatus = { schemaVersion: number; pages: number };
+
 export const EchoInputSchema = z.string().min(1).max(500);
 
-// Nombres de los canales IPC, en un solo sitio para no escribirlos a mano dos veces.
 export const IPC = {
   getAppInfo: 'app:get-info',
   echo: 'app:echo',
+  getVaultStatus: 'vault:status',
 } as const;
