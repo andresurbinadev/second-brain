@@ -14,6 +14,9 @@ importers:
 
   apps/desktop:
     dependencies:
+      '@sb/core':
+        specifier: workspace:*
+        version: link:../../packages/core
       '@sb/shared':
         specifier: workspace:*
         version: link:../../packages/shared

@@ -30,6 +30,27 @@ const MIGRATIONS: { version: number; sql: string }[] = [
       );
     `,
   },
+    {
+    version: 2,
+    sql: `
+      ALTER TABLE pages ADD COLUMN source_ref TEXT;
+      ALTER TABLE relationships ADD COLUMN provenance TEXT NOT NULL DEFAULT 'user';
+      CREATE TABLE page_versions (
+        id          INTEGER PRIMARY KEY AUTOINCREMENT,
+        page_id     TEXT NOT NULL,
+        title       TEXT NOT NULL,
+        body        TEXT NOT NULL,
+        status      TEXT NOT NULL,
+        provenance  TEXT NOT NULL,
+        source_ref  TEXT,
+        updated_at  TEXT NOT NULL,
+        saved_at    TEXT NOT NULL
+      );
+      CREATE INDEX idx_page_versions_page ON page_versions(page_id);
+      CREATE INDEX idx_relationships_from ON relationships(from_id);
+      CREATE INDEX idx_relationships_to ON relationships(to_id);
+    `,
+  },
 ];
 
 export const LATEST_VERSION = MIGRATIONS.at(-1)!.version;
