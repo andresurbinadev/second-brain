@@ -51,6 +51,27 @@ const MIGRATIONS: { version: number; sql: string }[] = [
       CREATE INDEX idx_relationships_to ON relationships(to_id);
     `,
   },
+    {
+    version: 3,
+    sql: `
+      CREATE VIRTUAL TABLE pages_fts USING fts5(
+        title, body,
+        content='pages', content_rowid='rowid',
+        tokenize='unicode61 remove_diacritics 2'
+      );
+      CREATE TRIGGER pages_fts_insert AFTER INSERT ON pages BEGIN
+        INSERT INTO pages_fts(rowid, title, body) VALUES (new.rowid, new.title, new.body);
+      END;
+      CREATE TRIGGER pages_fts_delete AFTER DELETE ON pages BEGIN
+        INSERT INTO pages_fts(pages_fts, rowid, title, body) VALUES ('delete', old.rowid, old.title, old.body);
+      END;
+      CREATE TRIGGER pages_fts_update AFTER UPDATE ON pages BEGIN
+        INSERT INTO pages_fts(pages_fts, rowid, title, body) VALUES ('delete', old.rowid, old.title, old.body);
+        INSERT INTO pages_fts(rowid, title, body) VALUES (new.rowid, new.title, new.body);
+      END;
+      INSERT INTO pages_fts(pages_fts) VALUES ('rebuild');
+    `,
+  },
 ];
 
 export const LATEST_VERSION = MIGRATIONS.at(-1)!.version;
