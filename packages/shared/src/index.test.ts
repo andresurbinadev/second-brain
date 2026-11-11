@@ -1,19 +1,25 @@
 import { describe, it, expect } from 'vitest';
-import { EchoInputSchema, AppInfoSchema } from './index';
+import { AppInfoSchema, NewPageInputSchema, PageIdSchema, SearchInputSchema } from './index';
 
-describe('EchoInputSchema', () => {
-  it('acepta un texto normal', () => {
-    expect(EchoInputSchema.parse('hola')).toBe('hola');
+describe('NewPageInputSchema', () => {
+  it('acepta una página nueva válida', () => {
+    expect(NewPageInputSchema.parse({ kind: 'project', title: 'App de riego' }).title).toBe('App de riego');
   });
 
-  it('rechaza lo que no es texto', () => {
-    expect(() => EchoInputSchema.parse(123)).toThrow();
-    expect(() => EchoInputSchema.parse({ cmd: 'rm -rf /' })).toThrow();
+  it('rechaza un título vacío o un tipo desconocido', () => {
+    expect(() => NewPageInputSchema.parse({ kind: 'project', title: '  ' })).toThrow();
+    expect(() => NewPageInputSchema.parse({ kind: 'planeta', title: 'Marte' })).toThrow();
+  });
+});
+
+describe('SearchInputSchema y PageIdSchema', () => {
+  it('rechaza búsquedas que no son texto o son demasiado largas', () => {
+    expect(() => SearchInputSchema.parse(123)).toThrow();
+    expect(() => SearchInputSchema.parse('a'.repeat(201))).toThrow();
   });
 
-  it('rechaza el texto vacío y el demasiado largo', () => {
-    expect(() => EchoInputSchema.parse('')).toThrow();
-    expect(() => EchoInputSchema.parse('a'.repeat(501))).toThrow();
+  it('rechaza un id que no es un UUID', () => {
+    expect(() => PageIdSchema.parse("1'; DROP TABLE pages; --")).toThrow();
   });
 });
 

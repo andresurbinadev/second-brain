@@ -1,7 +1,5 @@
 import type Database from 'better-sqlite3-multiple-ciphers';
-import type { PageKind } from '@sb/core';
-
-export type SearchResult = { id: string; kind: PageKind; title: string; snippet: string };
+import type { SearchResult } from '@sb/shared';
 
 // Convierte lo que escribe el usuario en una consulta FTS5 segura.
 // Cada palabra va entre comillas (así ningún símbolo se interpreta como operador)

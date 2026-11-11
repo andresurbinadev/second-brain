@@ -1,6 +1,6 @@
 const info = await window.api.getAppInfo();
-const vault = await window.api.getVaultStatus();
+const dash = await window.api.getDashboard();
 document.querySelector('#status')!.textContent =
-  `${info.name} ${info.version} en ${info.platform} · Bóveda cifrada: versión ${vault.schemaVersion}, ${vault.pages} páginas`;
+  `${info.name} ${info.version} · ${dash.counts.pages} páginas, ${dash.counts.relationships} relaciones`;
 
 export {};

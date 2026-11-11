@@ -39,6 +39,11 @@ export function listRelationships(db: Database.Database, pageId: string): Relati
   return rows.map(toRelationship);
 }
 
+// Todas las relaciones del cerebro (para el grafo y el dashboard).
+export function listAllRelationships(db: Database.Database): Relationship[] {
+  return (db.prepare('SELECT * FROM relationships').all() as RelationshipRow[]).map(toRelationship);
+}
+
 export function deleteRelationship(db: Database.Database, id: string): void {
   db.prepare('DELETE FROM relationships WHERE id = ?').run(id);
 }
