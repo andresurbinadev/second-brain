@@ -50,6 +50,7 @@ export async function ollamaChat(opts: ChatOptions, fetchFn: Fetch = fetch, base
       model: opts.model,
       messages: opts.messages,
       stream: false,
+      think:false,
       options: { temperature: opts.temperature ?? 0.1, num_predict: opts.maxTokens ?? 800 },
     }),
   });
